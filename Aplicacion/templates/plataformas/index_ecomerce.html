@@ -1,0 +1,253 @@
+{% extends '/plataformas/includes/header_ecommerce.html' %}
+
+
+{% block body %}
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" style="color: whitesmoke;">Ecommerce</a>
+    </div>
+    <a href="/Index">
+    <button style="background-color: transparent;border: transparent;">
+        <i class="fa-solid fa-arrow-right-from-bracket fa-2xl" style="color: #95a7c6;"></i>
+    </button>
+    </a>
+
+</nav>
+
+
+
+
+    
+
+
+<div class="container p-5">
+    <div class="row">
+
+        <div class="col-md-4">
+
+            <div class="card card-body">
+                {% with messages=get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                
+                <div class="alert alert-danger" role="alert" 
+                style="background: #8920cf; color: white;width: 260px; height: 50px;">
+                    {{ messages.0 }}
+                </div>
+                    
+                    
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+                <form action="/completados">
+                    <p id="pb">Busqueda Pedido</p>
+
+
+                    <a href="/Index_Ecommerce">
+                        <button style="width: 250px;" class="btn btn-primary m-2" type="button">
+                            Filstrar por Pedido
+                        </button>
+                    </a>
+                    <a href="/Index_Ecommerce_Nombre">
+                        <button style="width: 250px;"class="btn btn-primary m-2" type="button" >
+                            Filtrar por Nombre
+                        </button>
+                    </a>
+                    <a href="/Index_Ecommerce_Fecha">
+                        <button style="width: 250px;"class="btn btn-primary m-2" type="button" >
+                            Filtrar por Fecha
+                        </button>
+                    </a>
+                        <input type="submit" class="btn btn-sucess btn-block" style="background-color:#0dfff7 ;" value="Pedidos Completados">
+                    
+                    
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-8" id="caja_tablita">
+                <table class="table table-bordered" width="50%" id="tablita">
+                    <thead id="thead">
+                    <tr style="width: 150px;">
+                        <th >ID Pedido </th>
+                        <th>Nombre Cliente</th>
+                        <th>Apellido P. Cliente</th>
+                        <th>Apellido M. Cliente</th>
+                        <th>Fecha Pedido</th>
+                        <th>Acciones</th>
+                        
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for pedido in pedidos %}
+                        <tr id="cliente">
+                            <td NOWRAP>
+                                <a class="btn btn"  data-bs-toggle="collapse" href="#{{ pedido.0 }}" 
+                                role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    {{ pedido.0 }}
+                                </a>
+                            <td NOWRAP>{{ pedido.1 }}</td>
+                            <td NOWRAP>{{ pedido.2 }}</td>
+                            <td NOWRAP>{{ pedido.3 }}</td>
+                            <td NOWRAP>{{ pedido.4 }}</td>
+                            <td style="background-color: whitesmoke;">
+                                
+                                <!-- Button trigger modal -->
+                                <i class="fa-solid fa-circle-xmark fa-2xl" data-toggle="modal" 
+                                data-target="#eliminar-{{ pedido.0 }}" style="color: #ff0059;"></i>
+                                  
+                              
+                                    <i class="fa-solid fa-circle-check fa-2xl" data-toggle="modal" 
+                                    data-target="#terminar-{{ pedido.0 }}" style="color: #35d520;"></i>
+                                
+                            </td>
+                            
+                        </tr>
+                        <tr id="titulo_productos">
+                            <td>Modelo</td>
+                            <td>Descripcion</td>
+                            <td>Talla</td>
+                            <td>Color</td>
+                            <td>Cantidad</td>
+                            
+                        </tr>
+                        
+                            {% for producto in productos %}
+                            {% if pedido.0 == producto.0 %}
+                            
+                            <tr style="font-size: small;" id="productos">
+
+    
+                            <td>
+                            <div class="collapse" id="{{ pedido.0 }}"> 
+                               {{ producto.1 }}
+                            </div>
+                            </td>
+
+                            <td>
+                            <div class="collapse" id="{{ pedido.0 }}"> 
+                               {{ producto.2 }}
+                            </div>
+                            </td>
+
+                            <td>
+                            <div class="collapse" id="{{ pedido.0 }}"> 
+                               {{ producto.3 }}
+                            </div>
+                            </td>
+
+                            <td>
+                            <div class="collapse" id="{{ pedido.0 }}"> 
+                               {{ producto.4 }}
+                            </div>
+                            </td>
+
+                            <td>
+                            <div class="collapse" id="{{ pedido.0 }}"> 
+                               {{ producto.5 }}
+                            </div>
+                            </td>
+                            <td></td>
+                        </tr>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="terminar-{{ pedido.0 }}" tabindex="-1" role="dialog" 
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Terminar Pedido</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                </div>
+                                <form action="/terminar/{{ pedido.0 }}" method="post">
+                                <div class="modal-body">
+                                    <div class="card card-body row" >
+                                        <input type="text" name="empleado" class="form-control" 
+                                        placeholder="ID Empleado" autofocus> 
+                                    </div>
+                                    <div class="card card-body row" >
+                                        <input type="date" name="fecha_envio" class="form-control" 
+                                        placeholder="ID Empleado" autofocus> 
+                                    </div>
+                                    <div class="card card-body row" >
+                                        <select  style="border-color: transparent;" name="estatus"> 
+                                            <option >
+                                                Estatus
+                                            </option>
+                                            <option value="Incompleto">
+                                                Incompleto
+                                            </option>
+                                            <option value="Pendiente">
+                                                Pendiente
+                                            </option>
+                                            <option value="Completado">
+                                                Completado
+                                            </option>
+                                        </select>
+                                    </div>
+                                        
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                 <button type="submit" class="btn btn-dark" style="background-color: #35d520;">Finalizar</button>
+                                </div>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="eliminar-{{ pedido.0 }}" tabindex="-1" role="dialog" 
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Pedido</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                ¿Esta seguro que desea eliminar este pedido?
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <a href="/elimina_pedido/{{ pedido.0 }}">
+
+                                <button type="submit" class="btn btn-danger" 
+                                style="background-color: #ff0059;">Eliminar pedido</button>
+
+                                </a>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        {% endif %}
+                        {% endfor %}
+                            
+                       
+                      
+                        {% endfor %}
+                        
+                    </tbody>
+
+
+                </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

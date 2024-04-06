@@ -1,0 +1,400 @@
+{% extends '/plataformas/includes/header_admi.html' %}
+
+
+{% block body %}
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" style="color: whitesmoke;">Administracion</a>
+    </div>
+    <a href="/Index">
+    <button style="background-color: transparent;border: transparent;">
+        <i class="fa-solid fa-arrow-right-from-bracket fa-2xl" style="color: #95a7c6;"></i>
+    </button>
+    </a>
+
+</nav>
+
+
+<div class="container p-5" style="margin-left: 50px;">
+    <div class="row">
+
+        <div class="col-md-3">
+
+            <div class="card card-body p-m-2">
+                {% with messages=get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                
+                <div class="alert alert-danger" role="alert" 
+                style="background: #8920cf; color: white;width: 260px; height: 50px;">
+                    {{ messages.0 }}
+                </div>
+                    
+                    
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <a class="btn btn-primary m-2" 
+                data-bs-toggle="collapse"  
+                href="#add_clientes" role="button" 
+                aria-expanded="false" 
+                aria-controls="multi-collapse">
+                    Agregar Cliente
+                  </a>
+
+                  <a class="btn btn-primary m-2" data-bs-toggle="collapse"  href="#add_empleados" 
+                  role="button" aria-expanded="false" aria-controls="multi-collapse">
+                    Agregar Empleado
+                  </a>
+
+
+            </div>
+
+        
+<div class="collapse" id="add_clientes">
+ 
+
+    <div class="col m-4">
+
+
+<form action="/agregar_cliente" method="POST">
+    
+    <div class="form-group" style="align-items: center; float:right;">
+        <p>Cliente
+        <i class="fa-solid fa-user-plus fa-2xl" style="color: #f0c733;"></i>
+        </p>
+    </div>
+     
+        <div class="form-group">
+            <input type="text" name="nombre" class="form-control"placeholder="Nombre(s)" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="apellidoP" class="form-control" placeholder="Apellido Paterno" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="apellidoM" class="form-control"placeholder="Apellido Materno" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="domicilio" class="form-control" placeholder="Domicilio" autofocus>
+        </div>
+        
+        <div class="form-group">
+            <input type="text" name="ciudad" class="form-control" placeholder="Ciudad" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="estado" class="form-control" placeholder="Estado" autofocus>
+        </div>
+        
+        <div class="form-group">
+            <input type="text" name="telefono" class="form-control"placeholder="Telefono" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="correo" class="form-control"placeholder="Correo" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input type="password" name="contrasena" class="form-control" placeholder="Contraeña" autofocus>
+        </div>
+
+        <input type="submit" class="btn btn-sucess btn-block" style="background-color:#47f85b ;" value="Guardar Empleado">
+
+    </form>
+
+</div>
+
+</div>      
+
+<div class="collapse" id="add_empleados">
+ 
+
+    <div class="col m-4">
+    {% with messages=get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    
+    <div class="alert alert-danger" role="alert" 
+    style="background: #8920cf; color: white;width: 260px; height: 50px;">
+        {{ messages.0 }}
+    </div>
+        
+        
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form action="/add_empleado" method="POST">
+        
+        <div class="form-group" style="align-items: center; float:right;">
+            <p>Empleado
+            <i class="fa-solid fa-user-plus fa-2xl" style="color: #41b488;"></i>
+            </p>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="nombre" class="form-control"placeholder="Nombre(s)" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="apellidoP" class="form-control" placeholder="Apellido Paterno" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="apellidoM" class="form-control"placeholder="Apellido Materno" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="domicilio" class="form-control" placeholder="Domicilio" autofocus>
+        </div>
+        
+        <div class="form-group">
+            <input type="text" name="ciudad" class="form-control" placeholder="Ciudad" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="estado" class="form-control" placeholder="Estado" autofocus>
+        </div>
+        
+        <div class="form-group">
+            <input type="text" name="telefono" class="form-control"placeholder="Telefono" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="nss" class="form-control" placeholder="Numero Seguro Social" autofocus>
+        </div>
+        
+        <div class="form-group">
+            <input type="text" name="rfc" class="form-control"placeholder="RFC" autofocus>
+        </div>
+
+        <div class="form-group">
+            
+            <select name="puesto" id="" placeholder="'Puesto" style="border-style: solid; border-color: transparent;">
+                <option value="">Departamento</option>
+                {% for dep in deps %}
+                <option value="{{ dep.0 }}">
+                    {{ dep.0 }}._ {{ dep.1 }}
+                </option>
+                {% endfor %}
+            </select>
+            
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="correo" class="form-control"placeholder="Correo" autofocus>
+        </div>
+
+        <div class="form-group">
+            <input type="password" name="contrasena" class="form-control" placeholder="Contraeña" autofocus>
+        </div>
+
+        <input type="submit" class="btn btn-sucess btn-block" style="background-color:#47f85b ;" value="Guardar Empleado">
+
+    </form>
+    
+</div>
+    </div>
+
+
+
+
+            
+
+        </div>
+
+        <div class="col-md-8" >
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#clientes" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  Tabla Clientes  [  {{ total_C.0 }}  ]
+                </a>
+
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#empleados" role="button" aria-expanded="false" aria-controls="collapseExample2">
+                    Tabla Empleados   [  {{ total_E.0 }}  ]
+                  </a>
+
+
+               
+              </p>
+<!-- ############################################################ E M P L E A D O ############################################################-->    
+              <div class="collapse" id="empleados">
+                <div class="card card-body" style="width:fit-content;">
+                    <table class="table table-bordered" width="50%" style="font-size:small;">
+                        <thead>
+                        <tr style="width: 150px;">
+                            <th >Id_Empleado </th>
+                            <th>Nombre</th>
+                            <th>Apellido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Domicilio</th>
+                            <th>Telefono</th>
+                            <th>Numero de Seguro</th>
+                            <th>RFC</th>
+                            <th>Puesto</th>
+                            <th>Correo</th>
+                            
+                        </tr>
+                        </thead>
+    
+                        <tbody>
+                            {% for empleado in empleados %}
+                            <!-- Modal -->
+                            <div class="modal fade" id="{{ empleado.0 }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Eliminar empleado</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <i class="fa-solid fa-circle-exclamation fa-xl" style="color: #ff2f00;"></i>
+                                    ¿Desea eleminar este registro de empleado?
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <a href="/delete_empleado/{{ empleado.0 }}">
+                                    <button type="button" class="btn btn-danger">Aceptar</button>
+                                    </a>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <tr> 
+                                <td NOWRAP>{{ empleado.0 }}</td>
+                                <td NOWRAP>{{ empleado.1 }}</td>
+                                <td NOWRAP>{{ empleado.2 }}</td>
+                                <td NOWRAP>{{ empleado.3 }}</td>
+                                <td NOWRAP>
+                                    <a class="btn btn" data-bs-toggle="collapse" href="#domicilio" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Domicilio
+                                      </a>
+                                      <div class="collapse" id="domicilio">
+                                    {{ empleado.4 }}
+                                    {{ empleado.5 }}
+                                    {{ empleado.6 }}
+                                      </div>
+                                    </td>
+                                <td NOWRAP>{{ empleado.7 }}</td>
+                                <td NOWRAP>{{ empleado.8 }}</td>
+                                <td NOWRAP>{{ empleado.9 }}</td>
+                                <td NOWRAP>{{ empleado.10 }}</td>
+                                <td NOWRAP>{{ empleado.11 }}</td>
+
+                                <td NOWRAP>
+                                    <a href="/edit_empleado/{{ empleado.0}}">
+                                        <i class="fa-solid fa-user-pen fa-2xl" style="color: #41b488;"></i>
+                                    </a>
+                                    <i class="fa-solid fa-trash fa-2xl" style="color: #ff0059;"  data-toggle="modal" data-target="#{{ empleado.0 }}"></i>
+                                    
+                                </td>
+                            </tr>
+                          
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+              </div>
+
+<!-- ############################################################ C L I E N T E ############################################################-->    
+
+              <div class="collapse" id="clientes">
+                <div class="card card-body" style="width:fit-content;">
+                    <table class="table table-bordered" width="50%"style="font-size:small;">
+                        <thead>
+                        <tr style="width: 150px;">
+                            <th >Id_Cliente </th>
+                            <th>Nombre</th>
+                            <th>Apellido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Domicilio</th>
+                            <th>Telefono</th>
+                            <th>Saldo</th>
+                            <th>Correo</th>
+                        </tr>
+                        </thead>
+    
+                        <tbody>
+                            {% for cliente in clientes %}
+
+
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="{{ cliente.0 }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Eliminar cliente</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <i class="fa-solid fa-circle-exclamation fa-xl" style="color: #ff2f00;"></i>
+                                    ¿Desea eleminar este registro de cliente?
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <a href="/delete_cliente/{{ cliente.0 }}">
+                                    <button type="button" class="btn btn-danger">Aceptar</button>
+                                    </a>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <tr>
+                                <td NOWRAP>{{ cliente.0 }}</td>
+                                <td NOWRAP>{{ cliente.1 }}</td>
+                                <td NOWRAP>{{ cliente.2 }}</td>
+                                <td NOWRAP>{{ cliente.3 }}</td>
+                                <td NOWRAP><a class="btn btn" data-bs-toggle="collapse" href="#domicilio" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    Domicilio
+                                  </a>
+                                  <div class="collapse" id="domicilio">
+                                {{ cliente.4 }}
+                                {{ cliente.5 }}
+                                {{ cliente.6 }}
+                                  </div>
+                                </td>
+                                <td NOWRAP>{{ cliente.7 }}</td>
+                                <td NOWRAP>$ {{ cliente.8 }}</td>
+                                <td NOWRAP>{{ cliente.9 }}</td>
+                                <td NOWRAP>
+                                    <a href="/edit_cliente/{{ cliente.0}}">
+                                        <i class="fa-solid fa-user-pen fa-2xl" style="color: #f0c733;"></i>
+                                    </a>
+                                        <i class="fa-solid fa-trash fa-2xl" style="color: #ff0059;"  data-toggle="modal" data-target="#{{ cliente.0 }}" value=""></i>
+                                        
+                                    
+                                </td>
+                                
+                            </tr>
+                          
+                            {% endfor %}
+                        </tbody>
+    
+    
+                    </table>
+                </div>
+              </div>
+                
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+{% endblock %}
